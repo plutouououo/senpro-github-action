@@ -23,8 +23,8 @@ jobs:
       - run: npm run build
 
   deploy:
-  needs: test-build
-  runs-on: ubuntu-latest
+    needs: test-build
+    runs-on: ubuntu-latest
 
   strategy:
     matrix:
@@ -38,28 +38,28 @@ jobs:
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
-      script: |
-        eval "$(ssh-agent -s)"
-        ssh-add ~/.ssh/<NAMA_KEY_DARI_ASPRAK>
-        echo "cek folder project";
-        if [ -d "${HOME}/senpro/<NTU>/modul02/senpro-github-action/" ] &&
-
-        then
-          echo "Repository belum di-clone. Cloning...";
-          mkdir -p ~/senpro/<NTU>/modul02;
-          cd ~/senpro/<NTU>/modul02;
-          git clone <LINK_REPOSITORY_FORK>;
-          cd ~/senpro/<NTU>/modul02/senpro-github-action;
-          echo "Install Package dan Build Project";
-          npm install;
-          npm run build;
-        ||
-
-          echo "Repository sudah ada. Building...";
-          cd ~/senpro/<NTU>/modul02/senpro-github-action;
-          git restore .;
-          git pull origin main;
-          echo "Install Package dan Build Project";
-          npm install;
-          npm run build;
-        fi
+        script: |
+          eval "$(ssh-agent -s)"
+          ssh-add ~/.ssh/ssh-praktikan49
+          echo "Cek folder project";
+          [ ! -d "${HOME}/senpro/519131/modul02/senpro-github-action/" ] &&
+            {
+              echo "Repository belum di-clone. Cloning...";
+              mkdir -p ~/senpro/519131/modul02;
+              cd ~/senpro/519131/modul02;
+              git clone https://github.com/plutouououo/senpro-github-action.git;
+              cd ~/senpro/519131/modul02/senpro-github-action;
+              echo "Install Package dan Build Project";
+              npm install;
+              npm run build;
+            } ||
+            {
+              echo "Repository sudah ada. Building...";
+              cd ~/senpro/519131/modul02/senpro-github-action;
+              git restore .;
+              git pull origin main;
+              echo "Install Package dan Build Project";
+              npm install;
+              npm run build;
+            }
+        
