@@ -1,15 +1,15 @@
 name: Test, Build, and Deploy | Modul 01 - Lab2.2 Senior Project
 
 on:
-  push: 
+  push:
     branches: [main]
 
 jobs:
   test-build:
     runs-on: ubuntu-latest
 
-    strategy: 
-      matrix: 
+    strategy:
+      matrix:
         node-version: [16.x]
 
     steps:
@@ -17,7 +17,7 @@ jobs:
       - name: Testing Build pre-Deploy
         uses: actions/setup-node@v2
         with:
-          node-version: ${{matrix.node-version}}
+          node-version: ${{ matrix.node-version }}
           cache: "npm"
       - run: npm i
       - run: npm run build
